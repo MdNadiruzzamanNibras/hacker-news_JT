@@ -41,7 +41,7 @@ const Details = () => {
                         
                     <h1 className="text-center mt-10 text-3xl font-bold">Title: { post.title}</h1>
                         <h1 className="text-center my-5 text-3xl font-bold">Points: {post.points}</h1>
-                        <button onClick={handleback} className="px-8 ml-4 my-3 py-2 rounded bg-black text-white">Back</button>
+                        <button onClick={handleback} className="px-8 ml-4 my-3 py-2 rounded bg-black text-white">Home</button>
                     </div>
                     <div className="">
                         {
@@ -56,7 +56,7 @@ const Details = () => {
             </div>
             <div>
                 <ReactPaginate
-          className="flex justify-center  mt-16 items-center text-black "
+          className="flex justify-center  my-16 lg:my-20 items-center text-black "
           previousLabel={"Previous"}
           nextLabel={"Next"}
           breakLabel={"..."}
