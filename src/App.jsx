@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 const App = () => {
   const [search, setSearch] = useState('')
   const [datas, setDatas] = useState('')
-
+  const navigate = useNavigate()
   const handlesubmit = (e) => {
     e.preventDefault()
   fetch(`http://hn.algolia.com/api/v1/search?query=${search}`)
@@ -12,7 +13,10 @@ const App = () => {
     .then(data=> setDatas(data.hits))
     
   }
-  console.log(datas,'15');
+  const handleNavigate = (id) => {
+    navigate(`/details/${id}`)
+  }
+  console.log(datas);
   return (
     <div className="container mx-auto">
       <div>
@@ -20,7 +24,7 @@ const App = () => {
           <div className="flex items-center mt-12">
             <form onSubmit={handlesubmit}>
         <input placeholder="search your posts" className="border-2 text-center w-96 h-12  border-black rounded text-xl" type="text" value={search} onChange={(e)=>setSearch(e.target.value)} name="" id="" />
-      <button className="px-8 ml-8 py-2 border-2 border-black rounded text-xl" type="submit">Search</button>
+      <button className="px-8 bg-black text-white hover:text-black hover:bg-gray-100 ml-2 py-2 border-2 border-black rounded text-xl" type="submit">Search</button>
       </form>
           </div>
         </div>
@@ -29,7 +33,7 @@ const App = () => {
           {
         datas &&
         datas?.map((d, index) =>
-          <h2 className="bg-gray-100 px-4 py-1 w-80 h-16 flex justify-center items-center rounded hover:shadow-lg hover:shadow-gray-500" key={index}>{d.title ? d.title : d.story_title
+          <h2 onClick={()=>handleNavigate(d?.objectID)} className="bg-gray-100 cursor-pointer px-4 py-1 w-80 h-20 flex justify-center items-center rounded-md hover:shadow-lg hover:shadow-gray-500" key={index}>{d.title ? d.title : d.story_title
 }</h2>)
       }
       </div>
