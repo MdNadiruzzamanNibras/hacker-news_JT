@@ -1,22 +1,30 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 
 const App = () => {
   const [search, setSearch] = useState('')
   const [datas, setDatas] = useState('')
+   const [loading, setloading] = useState(false)
   const navigate = useNavigate()
   const handlesubmit = (e) => {
     e.preventDefault()
-  fetch(`http://hn.algolia.com/api/v1/search?query=${search}`)
+    setloading(true)
+  fetch(`https://hn.algolia.com/api/v1/search?query=${search}`)
     .then(res => res.json())
-    .then(data=> setDatas(data.hits))
+    .then(data => {
+      setDatas(data.hits)
+       setloading(false)})
     
   }
+  
   const handleNavigate = (id) => {
     navigate(`/details/${id}`)
   }
-  console.log(datas);
+ if (loading) {
+        return <Loading/>
+    }
   return (
     <div className="container mx-auto">
       <div>
@@ -29,11 +37,11 @@ const App = () => {
           </div>
         </div>
         <h1 className="text-center my-10  font-bold text-3xl">{ datas ? "Hacker News": "Please type your topic"}</h1>
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid grid-cols-1  md:mx-0 md:grid-cols-2 lg:grid-cols-4 gap-5">
           {
         datas &&
         datas?.map((d, index) =>
-          <h2 onClick={()=>handleNavigate(d?.objectID)} className="bg-gray-100 cursor-pointer px-4 py-1 w-80 h-20 flex justify-center items-center rounded-md hover:shadow-lg hover:shadow-gray-500" key={index}>{d.title ? d.title : d.story_title
+          <h2 onClick={()=>handleNavigate(d?.objectID)} className="bg-gray-100 cursor-pointer px-4 py-1 w-80 h-20 flex justify-center items-center mx-auto lg:mx-0 rounded-md hover:shadow-lg hover:shadow-gray-500" key={index}>{d.title ? d.title : d.story_title
 }</h2>)
       }
       </div>
