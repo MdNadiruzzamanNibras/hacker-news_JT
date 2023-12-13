@@ -28,7 +28,7 @@ const App = () => {
       </form>
           </div>
         </div>
-        <h1 className="text-center my-10  font-bold text-3xl">{ datas ? "Hacker News": "Please search your title"}</h1>
+        <h1 className="text-center my-10  font-bold text-3xl">{ datas ? "Hacker News": "Please type your topic"}</h1>
         <div className="grid grid-cols-4 gap-5">
           {
         datas &&
